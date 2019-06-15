@@ -21,6 +21,7 @@ public class DbPlus : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[] {
 				"Core",
+                "DatabaseSupport",
 			});
 
 		PrivateDependencyModuleNames.AddRange(
