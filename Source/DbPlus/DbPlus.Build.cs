@@ -22,14 +22,19 @@ public class DbPlus : ModuleRules
 			new string[] {
 				"Core",
                 "DatabaseSupport",
+
+                "AwesomeService",
 			});
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
 				"CoreUObject",
+                "DatabaseSupport",
 				"Engine",
 				"Slate",
 				"SlateCore",
+
+                "AwesomeService",
 			});
 
         if (Target.bBuildEditor == true)

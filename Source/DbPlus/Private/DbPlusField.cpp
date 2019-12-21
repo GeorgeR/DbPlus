@@ -1,80 +1,100 @@
 #include "DbPlusField.h"
 
-const FString& FDbPlusField::GetName() const
+FDbPlusField::FDbPlusField()
+    : DataType(EDbPlusDataType::DPDT_Unknown),
+    bIsNull(true) { }
+
+FDbPlusField::FDbPlusField(const EDbPlusDataType InDataType)
+    : DataType(InDataType),
+    bIsNull(true) { }
+
+FDbPlusField::FDbPlusField(const int8& InValue)
+    : DataType(EDbPlusDataType::DPDT_Int8),
+    bIsNull(false)
 {
+	Value.Set<int8>(InValue);
 }
 
-EDbPlusDataType FDbPlusField::GetDataType() const
+FDbPlusField::FDbPlusField(const uint8& InValue)
+    : DataType(EDbPlusDataType::DPDT_UInt8),
+    bIsNull(false)
 {
+	Value.Set<uint8>(InValue);
 }
 
-bool FDbPlusField::IsNull() const
+FDbPlusField::FDbPlusField(const int16& InValue)
+    : DataType(EDbPlusDataType::DPDT_Int16),
+    bIsNull(false)
 {
+	Value.Set<int16>(InValue);
 }
 
-bool FDbPlusField::IsEmpty() const
+FDbPlusField::FDbPlusField(const uint16& InValue)
+    : DataType(EDbPlusDataType::DPDT_UInt16),
+    bIsNull(false)
 {
+	Value.Set<uint16>(InValue);
 }
 
-template <typename T>
-bool FDbPlusField::To(T& OutValue) const
+FDbPlusField::FDbPlusField(const int32& InValue)
+    : DataType(EDbPlusDataType::DPDT_Int32),
+    bIsNull(false)
 {
-	return ToOptional(OutValue, DbPlus::Traits::TIsNullable<T>());
+	Value.Set<int32>(InValue);
 }
 
-template <typename T>
-bool FDbPlusField::To(TOptional<T>& OutValue)
+FDbPlusField::FDbPlusField(const uint32& InValue)
+    : DataType(EDbPlusDataType::DPDT_UInt32),
+    bIsNull(false)
 {
-    if(IsNull())
-    {
-		OutValue = TOptional<T>();
-		return true;
-    }
-	else
-	{
-		typename TDecay<T>::Type Temp;
-
-		OutValue = TOptional<T>(Temp);
-		return true;
-	}
-	return false;
+	Value.Set<uint32>(InValue);
 }
 
-template <typename T>
-typename TDecay<T>::Type FDbPlusField::As() const
+FDbPlusField::FDbPlusField(const int64& InValue)
+    : DataType(EDbPlusDataType::DPDT_Int64),
+    bIsNull(false)
 {
-	typename TDecay<T>::Type Value;
-	To(Value);
-	return Value;
+	Value.Set<int64>(InValue);
 }
 
-template <typename T>
-typename TDecay<T>::Type FDbPlusField::Coalesce(const T& DefaultValue) const
+FDbPlusField::FDbPlusField(const uint64& InValue)
+    : DataType(EDbPlusDataType::DPDT_UInt64),
+    bIsNull(false)
 {
-	return IsNull() ? DefaultValue : As<T>();
+	Value.Set<uint64>(InValue);
 }
 
-template <typename T>
-bool FDbPlusField::ToOptional(T& OutValue, const std::true_type&) const
+FDbPlusField::FDbPlusField(const float& InValue)
+    : DataType(EDbPlusDataType::DPDT_Float),
+    bIsNull(false)
 {
-	typedef DbPlus::Traits::TNullableTraits<T> NullableTraits;
-    if(IsNull())
-    {
-		NullableTraits::SetNull(OutValue);
-		return true;
-    }
-
-	return ToImplementation(OutValue, DbPlus::Traits::THasParser<T, Binary>());
+	Value.Set<float>(InValue);
 }
 
-template <typename T>
-bool FDbPlusField::ToOptional(T& OutValue, const std::false_type&) const
+FDbPlusField::FDbPlusField(const double& InValue)
+    : DataType(EDbPlusDataType::DPDT_Double),
+    bIsNull(false)
 {
-    if(IsNull())
-    {
-        // throw that value is null
-		return false;
-    }
+	Value.Set<double>(InValue);
+}
 
-	return ToImplementation(OutValue, DbPlus::Traits::THasParser<T, Binary>());
+FDbPlusField::FDbPlusField(const FString& InValue)
+    : DataType(EDbPlusDataType::DPDT_String),
+    bIsNull(false)
+{
+	Value.Set<FString>(InValue);
+}
+
+FDbPlusField::FDbPlusField(const FChar& InValue)
+    : DataType(EDbPlusDataType::DPDT_Char),
+    bIsNull(false)
+{
+	Value.Set<FChar>(InValue);
+}
+
+FDbPlusField::FDbPlusField(const bool& InValue)
+    : DataType(EDbPlusDataType::DPDT_Boolean),
+    bIsNull(false)
+{
+	Value.Set<bool>(InValue);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AsyncResult.h"
 
 #include "DbPlusTypes.generated.h"
 
@@ -27,5 +28,27 @@ enum class EDbPlusDataType : uint8
 
 	DPDT_Boolean             UMETA(DisplayName = "Boolean"),
 
-	DPDT_Unknown             UMETA(DisplayName = "Unknown"),
+	DPDT_Unknown = 255       UMETA(DisplayName = "Unknown (*unsupported)"),
+};
+
+USTRUCT(BlueprintType)
+struct DBPLUS_API FDbPlusTransaction
+{
+	GENERATED_BODY()
+
+public:
+	static FDbPlusTransaction None;
+
+public:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	FString Name;
+
+	/** Optional description, useful for debugging */
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	FString Description;
+
+	FDbPlusTransaction() = default;
+	explicit FDbPlusTransaction(const FString& InName, const FString& InDescription = TEXT(""));
+
+	FORCEINLINE bool IsValid() const { return !Name.IsEmpty(); }
 };
