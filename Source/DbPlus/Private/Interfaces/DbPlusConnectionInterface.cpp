@@ -1,5 +1,7 @@
 #include "Interfaces/DbPlusConnectionInterface.h"
 
+#include "Launch/Resources/Version.h"
+
 bool IDbPlusConnectionInterface::Connect()
 {
 	return ReceiveConnect();

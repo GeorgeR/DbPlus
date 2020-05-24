@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "TVariant.h"
+#include "Misc/TVariant.h"
 
 #include "DbPlusTypes.h"
 

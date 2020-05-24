@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AsyncResult.h"
+#include "Async/AsyncResult.h"
 
 #include "DbPlusTypes.generated.h"
 
